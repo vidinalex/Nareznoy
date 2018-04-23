@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="30dp"
+        android:textColor="@android:color/darker_gray"
+        >
+
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="textPassword"
+            android:textColor="@android:color/darker_gray"
+            android:textColorHint="@android:color/darker_gray" />
+
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:textColorHint="@android:color/darker_gray"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:textColor="@android:color/darker_gray"
+            android:inputType="textPassword" />
+
+
+        <Button
+            android:id="@+id/bLogin"
+            android:layout_width="216dp"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tvRegisterHere"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Register Here!"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="25dp" />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

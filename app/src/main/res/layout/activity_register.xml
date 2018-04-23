@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity">
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="30dp"
+        android:textColor="@android:color/darker_gray"
+        >
+
+        <EditText
+            android:id="@+id/etEmail"
+            android:textColorHint="@android:color/darker_gray"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:textColor="@android:color/darker_gray"
+            android:inputType="textPersonName" />
+    <EditText
+        android:id="@+id/etPassword"
+        android:textColorHint="@android:color/darker_gray"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:textColor="@android:color/darker_gray"
+        android:inputType="textPassword" />
+
+
+        <Button
+            android:id="@+id/bRegister"
+            android:layout_width="216dp"
+            android:layout_height="wrap_content"
+            android:text="Register"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/bRefLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Already have acc?"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="25dp"/>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
