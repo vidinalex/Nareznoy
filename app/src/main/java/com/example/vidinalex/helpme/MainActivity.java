@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                         if (drawerItem instanceof Nameable) {
                             Toast.makeText(MainActivity.this, MainActivity.this.getString(((Nameable) drawerItem).getNameRes()), Toast.LENGTH_SHORT).show();
                             if(MainActivity.this.getString(((Nameable) drawerItem).getNameRes()) == getString(R.string.drawer_item_points)){
-                                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                                 startActivity(intent);
                             }
 
