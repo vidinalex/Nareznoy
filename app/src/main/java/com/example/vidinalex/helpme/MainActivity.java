@@ -38,72 +38,8 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Инициализируем Navigation Drawer
-        drawerResult = new Drawer()
-                .withActivity(this)
-                .withToolbar(toolbar)
-                .withActionBarDrawerToggle(true)
-                .withHeader(R.layout.drawer_header)
-                .addDrawerItems(
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_points).withIcon(FontAwesome.Icon.faw_home).withBadge("99").withIdentifier(1),
-                        //new PrimaryDrawerItem().withName(R.string.drawer_item_free_play).withIcon(FontAwesome.Icon.faw_gamepad),
-                        //new PrimaryDrawerItem().withName(R.string.drawer_item_custom).withIcon(FontAwesome.Icon.faw_eye).withBadge("6").withIdentifier(2),
-                        new SectionDrawerItem().withName(R.string.drawer_item_settings),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(FontAwesome.Icon.faw_cog),
-                        //new SecondaryDrawerItem().withName(R.string.drawer_item_open_source).withIcon(FontAwesome.Icon.faw_question).setEnabled(false),
-                        new DividerDrawerItem(),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_contact).withIcon(FontAwesome.Icon.faw_github).withBadge("12+").withIdentifier(1)
-                )
-                .withOnDrawerListener(new Drawer.OnDrawerListener() {
-                    @Override
-                    public void onDrawerOpened(View drawerView) {
-                        // Скрываем клавиатуру при открытии Navigation Drawer
-                        InputMethodManager inputMethodManager = (InputMethodManager) MainActivity.this.getSystemService(Activity.INPUT_METHOD_SERVICE);
-                        inputMethodManager.hideSoftInputFromWindow(MainActivity.this.getCurrentFocus().getWindowToken(), 0);
-                    }
+        drawerResult = new LeftSideToolbarDrawer(this, toolbar, drawerResult).build();
 
-                    @Override
-                    public void onDrawerClosed(View drawerView) {
-                    }
-                })
-                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                    @Override
-                    // Обработка клика
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
-                        if (drawerItem instanceof Nameable) {
-                            Toast.makeText(MainActivity.this, MainActivity.this.getString(((Nameable) drawerItem).getNameRes()), Toast.LENGTH_SHORT).show();
-                            if(MainActivity.this.getString(((Nameable) drawerItem).getNameRes()) == getString(R.string.drawer_item_points)){
-                                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                                startActivity(intent);
-                            }
-
-                        }
-                        if (drawerItem instanceof Badgeable) {
-                            Badgeable badgeable = (Badgeable) drawerItem;
-                            if (badgeable.getBadge() != null) {
-                                // учтите, не делайте так, если ваш бейдж содержит символ "+"
-                                try {
-                                    int badge = Integer.valueOf(badgeable.getBadge());
-                                    if (badge > 0) {
-                                        drawerResult.updateBadge(String.valueOf(badge - 1), position);
-                                    }
-                                } catch (Exception e) {
-                                    Log.d("test", "Не нажимайте на бейдж, содержащий плюс! :)");
-                                }
-                            }
-                        }
-                    }
-                })
-                .withOnDrawerItemLongClickListener(new Drawer.OnDrawerItemLongClickListener() {
-                    @Override
-                    // Обработка длинного клика, например, только для SecondaryDrawerItem
-                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
-                        if (drawerItem instanceof SecondaryDrawerItem) {
-                            Toast.makeText(MainActivity.this, MainActivity.this.getString(((SecondaryDrawerItem) drawerItem).getNameRes()), Toast.LENGTH_SHORT).show();
-                        }
-                        return false;
-                    }
-                })
-                .build();
     }
 
     @Override
