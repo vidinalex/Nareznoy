@@ -11,8 +11,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import com.firebase.ui.database.FirebaseListAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.mikepenz.iconics.typeface.FontAwesome;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
@@ -26,6 +33,18 @@ import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 public class ProfileActivity extends AppCompatActivity {
 
     private Drawer.Result drawerResult = null;
+
+    private FirebaseAuth mAuth;
+    private DatabaseReference myRef;
+
+    FirebaseUser user = mAuth.getInstance().getCurrentUser();
+
+    FirebaseListAdapter mAdapter;
+
+    private EditText ET_new_task;
+    private Button Btn_new_task;
+
+    ListView ListUserTasks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

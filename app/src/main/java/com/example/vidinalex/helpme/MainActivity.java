@@ -11,8 +11,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import com.firebase.ui.database.FirebaseListAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.mikepenz.iconics.typeface.FontAwesome;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
@@ -26,6 +34,18 @@ import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 public class MainActivity extends AppCompatActivity {
 
     private Drawer.Result drawerResult = null;
+
+    private FirebaseAuth mAuth;
+    private DatabaseReference myRef;
+
+    FirebaseUser user = mAuth.getInstance().getCurrentUser();
+
+    FirebaseListAdapter mAdapter;
+
+    private EditText ET_new_task;
+    private Button Btn_new_task;
+
+    ListView ListUserTasks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +124,19 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
                 .build();
+
+        myRef = FirebaseDatabase.getInstance().getReference();
+
+        Btn_new_task = (Button)findViewById(R.id.BTN_send);
+        ET_new_task = (EditText) findViewById(R.id.ET_send);
+
+        Btn_new_task.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) {
+                myRef.child(user.getUid()).child("points").push().setValue(ET_new_task.getText().toString());
+            }
+        });
     }
 
     @Override
@@ -116,5 +149,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void stopActivity(){
+        this.finish();
+    }
 
 }
