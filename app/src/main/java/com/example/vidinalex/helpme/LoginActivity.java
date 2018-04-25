@@ -54,6 +54,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     // User is signed in
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     LoginActivity.this.startActivity(intent);
+                    closeActivity();
 
                 } else {
                     // User is signed out
@@ -72,8 +73,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 LoginActivity.this.startActivity(intent);
+                closeActivity();
+
             }
         });
+
 
         if (mSettings.contains(APP_PREFERENCES_EMAIL)) {
             ETemail.setText(mSettings.getString(APP_PREFERENCES_EMAIL,null));
@@ -113,6 +117,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Toast.makeText(LoginActivity.this, "Aвторизация провалена", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    private void closeActivity() {
+        this.finish();
     }
     public void registration (String email , String password){
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
