@@ -13,6 +13,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.mikepenz.iconics.typeface.FontAwesome;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
@@ -27,10 +29,18 @@ public class MainActivity extends AppCompatActivity {
 
     private Drawer.Result drawerResult = null;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+
+
+
+
 
         // Инициализируем Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -84,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                                 try {
                                     int badge = Integer.valueOf(badgeable.getBadge());
                                     if (badge > 0) {
-                                        drawerResult.updateBadge(String.valueOf(badge - 1), position);
+                                        //drawerResult.updateBadge(String.valueOf(badge - 1), position);
                                     }
                                 } catch (Exception e) {
                                     Log.d("test", "Не нажимайте на бейдж, содержащий плюс! :)");

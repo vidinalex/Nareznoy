@@ -17,6 +17,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
@@ -31,6 +36,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public static final String APP_PREFERENCES_EMAIL = "";
     public static final String APP_PREFERENCES_PASSWORD = "";
     private TextView refToReg;
+    private DatabaseReference mDatabase;
+    private DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
+    private String s;
 
     private SharedPreferences mSettings;
     private SharedPreferences mSettings2;
@@ -63,6 +71,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             }
         };
+
+        myRef.child("points").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                s = snapshot.getValue().toString();
+                int l = s.indexOf("=");
+                String s2 ="";
+                for (int i = l+1; i < s.length()-1; i++) {
+                    s2=s2+s.charAt(i);
+                }
+                Toast.makeText(LoginActivity.this, s2, Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+
+
+
 
         ETemail = (EditText) findViewById(R.id.etEmail);
         ETpassword = (EditText) findViewById(R.id.etPassword);
@@ -113,11 +141,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     editor2.putString(APP_PREFERENCES_PASSWORD,password);
                     editor2.commit();
 
+                    mDatabase = FirebaseDatabase.getInstance().getReference();
+
+                    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("phones");
+
+                    FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+
+
+                    mDatabase.child(currentFirebaseUser.getUid()).setValue("qq123");
+                    //Toast.makeText(LoginActivity.this, "" + mDatabase.child(currentFirebaseUser.getUid()).getKey(), Toast.LENGTH_SHORT).show();
+
+
                 }else
                     Toast.makeText(LoginActivity.this, "Aвторизация провалена", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
+
     private void closeActivity() {
         this.finish();
     }
