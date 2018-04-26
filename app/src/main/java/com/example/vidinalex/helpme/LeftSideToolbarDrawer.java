@@ -79,6 +79,12 @@ public class LeftSideToolbarDrawer extends Drawer {
                             activity.finish();
                         }
 
+                        if(activity.getString(((Nameable) drawerItem).getNameRes()) == activity.getString(R.string.drawer_item_help)){
+                            Intent intent = new Intent(activity, SettingsActivity.class);
+                            activity.startActivity(intent);
+                            activity.finish();
+                        }
+
                     }
 
                     if (drawerItem instanceof Badgeable) {
