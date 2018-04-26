@@ -78,12 +78,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
 
 
-        if (mSettings.contains(APP_PREFERENCES_EMAIL)) {
-            ETemail.setText(mSettings.getString(APP_PREFERENCES_EMAIL,null));
-            ETpassword.setText(mSettings2.getString(APP_PREFERENCES_PASSWORD,null));
-            signin(ETemail.getText().toString(),ETpassword.getText().toString());
 
-        }
 
         findViewById(R.id.bLogin).setOnClickListener(this);
         //findViewById(R.id.bRegister).setOnClickListener(this);

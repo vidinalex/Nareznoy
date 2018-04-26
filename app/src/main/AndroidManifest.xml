@@ -18,10 +18,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".LoginActivity"
+            android:label="@string/login"/>
+
+        <activity android:name=".RegisterActivity"
+            android:label="@string/registration"/>
+        <activity android:name=".ProfileActivity"
+            android:label="@string/drawer_item_profile"/>
+        <activity android:name=".SettingsActivity"
+            android:label="@string/action_settings"/>
     </application>
 
 </manifest>

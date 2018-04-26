@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Pomogite</string>
-    <string name="action_settings">Settings</string>
-    <string name="drawer_main_menu">Главное Меню</string>
-    <string name="drawer_item_profile">Профиль</string>
-    <string name="drawer_item_free_play">Free Play</string>
-    <string name="drawer_item_custom">Custom</string>
-    <string name="drawer_item_settings">Настройки</string>
-    <string name="drawer_item_help">Настройки</string>
-    <string name="drawer_item_open_source">Open Source</string>
-    <string name="drawer_item_contact">Связь</string>
+    <string name="action_settings">Pomogite</string> Settings
+    <string name="drawer_main_menu">Pomogite 0_0</string> Главное Меню
+    <string name="drawer_item_profile">Pomogite ;_;</string> Профиль
+    <string name="drawer_item_free_play">Pomogite -_-</string> Free Play
+    <string name="drawer_item_custom">Pomogite >:(</string> Custom
+    <string name="drawer_item_settings">Pomogite 9_6</string> Настройки
+    <string name="drawer_item_help">Pomogite Pomogite</string> Настройки
+    <string name="drawer_item_open_source">Pomogiteasd</string> Open Source
+    <string name="drawer_item_contact">Pomogite :((( </string> Связь
+
+    <string name="login">Pomogite ( ._.)</string> Вход
+    <string name="registration">Pomogite (._. )</string> Регистрация
 </resources>
