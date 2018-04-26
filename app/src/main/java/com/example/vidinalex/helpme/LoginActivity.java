@@ -3,10 +3,9 @@ package com.example.vidinalex.helpme;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -113,25 +112,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     editor2.putString(APP_PREFERENCES_PASSWORD,password);
                     editor2.commit();
 
+                    Intent intent= new Intent(LoginActivity.this, ProfileActivity.class);
+                    LoginActivity.this.startActivity(intent);
+                    closeActivity();
+
                 }else
                     Toast.makeText(LoginActivity.this, "Aвторизация провалена", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
     private void closeActivity() {
         this.finish();
     }
-    public void registration (String email , String password){
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful())
-                {
-                    Toast.makeText(LoginActivity.this, "Регистрация успешна", Toast.LENGTH_SHORT).show();
-                }
-                else
-                    Toast.makeText(LoginActivity.this, "Регистрация провалена", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+
 }
