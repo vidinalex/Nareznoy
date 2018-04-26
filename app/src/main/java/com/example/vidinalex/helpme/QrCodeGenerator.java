@@ -8,7 +8,7 @@ public class QrCodeGenerator {
 
     public static Bitmap generateQRCode(String userId)
     {
-        Bitmap myBitmap = QRCode.from(userId).bitmap();
+        Bitmap myBitmap = QRCode.from(userId).withSize(2000,2000).bitmap();
         return myBitmap;
     }
 }

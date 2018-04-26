@@ -1,5 +1,6 @@
 package com.example.vidinalex.helpme;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -33,7 +34,9 @@ public class ProfileActivity extends AppCompatActivity{
 
 
         final ImageView qrCode = findViewById(R.id.qrCode);
-        qrCode.setImageBitmap(QrCodeGenerator.generateQRCode(firebaseAuth.getUid()));
+        Bitmap qrCodeBitmap = QrCodeGenerator.generateQRCode(firebaseAuth.getUid());
+        qrCode.setImageBitmap(qrCodeBitmap);
+
 
 
         final TextView gmail = findViewById(R.id.gmail);
