@@ -62,27 +62,52 @@ public class LeftSideToolbarDrawer extends Drawer {
                         Toast.makeText(activity, activity.getString(((Nameable) drawerItem).getNameRes()), Toast.LENGTH_SHORT).show();
 
                         if(activity.getString(((Nameable) drawerItem).getNameRes()) == activity.getString(R.string.drawer_item_profile) && mAuth.getCurrentUser() != null){
-                            Intent intent = new Intent(activity, ProfileActivity.class);
-                            activity.startActivity(intent);
-                            activity.finish();
+                            if(!(activity instanceof MainActivity))
+                            {
+                                Intent intent = new Intent(activity, ProfileActivity.class);
+                                activity.startActivity(intent);
+                                activity.finish();
+                            }
+                            else
+                            {
+                                Intent intent = new Intent(activity, ProfileActivity.class);
+                                activity.startActivity(intent);
+                            }
                         }
 
                         if(activity.getString(((Nameable) drawerItem).getNameRes()) == activity.getString(R.string.drawer_item_profile) && mAuth.getCurrentUser() == null){
-                            Intent intent = new Intent(activity, LoginActivity.class);
-                            activity.startActivity(intent);
-                            activity.finish();
+                            if(!(activity instanceof MainActivity))
+                            {
+                                Intent intent = new Intent(activity, LoginActivity.class);
+                                activity.startActivity(intent);
+                                activity.finish();
+                            }
+                            else
+                            {
+                                Intent intent = new Intent(activity, LoginActivity.class);
+                                activity.startActivity(intent);
+                            }
                         }
 
                         if(activity.getString(((Nameable) drawerItem).getNameRes()) == activity.getString(R.string.drawer_main_menu)){
-                            Intent intent = new Intent(activity, MainActivity.class);
-                            activity.startActivity(intent);
-                            activity.finish();
+                            if(!(activity instanceof MainActivity))
+                            {
+                                activity.finish();
+                            }
                         }
 
                         if(activity.getString(((Nameable) drawerItem).getNameRes()) == activity.getString(R.string.drawer_item_help)){
-                            Intent intent = new Intent(activity, SettingsActivity.class);
-                            activity.startActivity(intent);
-                            activity.finish();
+                            if(!(activity instanceof MainActivity))
+                            {
+                                Intent intent = new Intent(activity, SettingsActivity.class);
+                                activity.startActivity(intent);
+                                activity.finish();
+                            }
+                            else
+                            {
+                                Intent intent = new Intent(activity, SettingsActivity.class);
+                                activity.startActivity(intent);
+                            }
                         }
 
                     }
@@ -126,4 +151,6 @@ public class LeftSideToolbarDrawer extends Drawer {
     public Result build() {
         return super.build();
     }
+
+
 }
