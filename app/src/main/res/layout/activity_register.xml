@@ -12,41 +12,87 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="30dp"
-        android:textColor="@android:color/darker_gray"
-        >
+        android:textColor="@android:color/darker_gray">
 
         <EditText
+            android:layout_marginTop="50dp"
             android:id="@+id/etEmail"
             android:textColorHint="@android:color/darker_gray"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Email"
+            android:textSize="20sp"
             android:textColor="@android:color/darker_gray"
-            android:inputType="textPersonName" />
-    <EditText
-        android:id="@+id/etPassword"
-        android:textColorHint="@android:color/darker_gray"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Password"
-        android:textColor="@android:color/darker_gray"
-        android:inputType="textPassword" />
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:layout_marginTop="5dp"
+            android:id="@+id/etPassword"
+            android:textColorHint="@android:color/darker_gray"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:textSize="20sp"
+            android:textColor="@android:color/darker_gray"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:layout_marginTop="5dp"
+            android:id="@+id/etPasswordConfirmation"
+            android:textColorHint="@android:color/darker_gray"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password Once again"
+            android:textSize="20sp"
+            android:textColor="@android:color/darker_gray"
+            android:inputType="textPassword" />
 
 
         <Button
+            android:layout_marginTop="5dp"
             android:id="@+id/bRegister"
-            android:layout_width="216dp"
-            android:layout_height="wrap_content"
-            android:text="Register"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/bRefLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Already have acc?"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="25dp"/>
+            android:textSize="30sp"
+            android:text="РЕГИСТРАЦИЯ" />
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:text="или через:"
+            android:gravity="center_horizontal"
+            android:textColor="@color/colorPrimaryDark"/>
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/common_google_signin_btn_icon_dark"/>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:id="@+id/bRefLogin"
+                android:text="ВХОД"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="20sp"
+                />
+
+        </RelativeLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

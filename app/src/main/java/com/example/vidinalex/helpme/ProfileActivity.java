@@ -41,7 +41,7 @@ public class ProfileActivity extends AppCompatActivity{
 
         final TextView gmail = findViewById(R.id.gmail);
 
-        DatabaseReference userDatabaseReference = firebaseDatabase.getReference(firebaseAuth.getUid());
+        DatabaseReference userDatabaseReference = firebaseDatabase.getReference("users").child(firebaseAuth.getUid());
 
 
         userDatabaseReference.child("gmail").addListenerForSingleValueEvent(new ValueEventListener() {
