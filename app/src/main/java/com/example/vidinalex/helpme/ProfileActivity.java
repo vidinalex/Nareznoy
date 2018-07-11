@@ -41,20 +41,23 @@ public class ProfileActivity extends AppCompatActivity{
 
         final TextView gmail = findViewById(R.id.gmail);
 
-        DatabaseReference userDatabaseReference = firebaseDatabase.getReference("users").child(firebaseAuth.getUid());
+        DatabaseReference userDatabaseReference = firebaseDatabase.getReference("users").child(firebaseAuth.getCurrentUser().getUid());
+
+        //TODO если заходит с телефона - вылет(
+
+            userDatabaseReference.child("gmail").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    gmail.setText(dataSnapshot.getValue().toString());
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
 
 
-        userDatabaseReference.child("gmail").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                gmail.setText(dataSnapshot.getValue().toString());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
         final TextView points = findViewById(R.id.points);
 

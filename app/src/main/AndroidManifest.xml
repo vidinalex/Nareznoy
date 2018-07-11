@@ -18,15 +18,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity"
-            android:label="@string/login"/>
-
-        <activity android:name=".RegisterActivity"
-            android:label="@string/registration"/>
-        <activity android:name=".ProfileActivity"
-            android:label="@string/drawer_item_profile"/>
-        <activity android:name=".SettingsActivity"
-            android:label="@string/action_settings"/>
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/login" />
+        <activity
+            android:name=".EmailRegistrationActivity"
+            android:label="@string/registration" />
+        <activity
+            android:name=".ProfileActivity"
+            android:label="@string/drawer_item_profile" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/action_settings" />
+        <activity android:name=".PhoneLoginActivity"></activity>
     </application>
 
 </manifest>

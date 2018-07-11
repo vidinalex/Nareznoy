@@ -37,7 +37,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_email_login);
         mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         mSettings2 = getSharedPreferences(APP_PREFERENCES2, Context.MODE_PRIVATE);
 
@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         refToReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                Intent intent = new Intent(LoginActivity.this, EmailRegistrationActivity.class);
                 LoginActivity.this.startActivity(intent);
                 closeActivity();
 
@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
         findViewById(R.id.bLogin).setOnClickListener(this);
-        //findViewById(R.id.bRegister).setOnClickListener(this);
+        findViewById(R.id.refToPhone).setOnClickListener(this);
     }
 
     @Override
@@ -90,6 +90,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         {
             if(!ETemail.getText().toString().equals("") && !ETpassword.getText().toString().equals(""))
             signin(ETemail.getText().toString(),ETpassword.getText().toString());
+        }
+        if(view.getId() == R.id.refToPhone)
+        {
+            Intent intent = new Intent(LoginActivity.this, PhoneLoginActivity.class);
+            startActivity(intent);
+
         }
     }
 
