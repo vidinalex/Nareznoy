@@ -96,7 +96,19 @@ public class PhoneLoginActivity extends AppCompatActivity implements View.OnClic
         PhoneAuthProvider.OnVerificationStateChangedCallbacks Callbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
             public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
+                mAuth.signInWithCredential(phoneAuthCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful())
+                        {
+                            Toast.makeText(PhoneLoginActivity.this, "вход успешна", Toast.LENGTH_SHORT).show();
+                            PhoneLoginActivity.this.finish();
+                        }
+                        else
+                            Toast.makeText(PhoneLoginActivity.this, "вход не успешна", Toast.LENGTH_SHORT).show();
 
+                    }
+                });
             }
 
             @Override

@@ -12,9 +12,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
-import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
@@ -123,6 +121,7 @@ public class EmailRegistrationActivity extends AppCompatActivity{
 
 
                             Toast.makeText(EmailRegistrationActivity.this, "телефон НЕ подтверждён, регистрация успешна", Toast.LENGTH_SHORT).show();
+                            closeActivity();
                         }
 
 
@@ -164,11 +163,29 @@ public class EmailRegistrationActivity extends AppCompatActivity{
         PhoneAuthProvider.getInstance().verifyPhoneNumber
                 (phone, 60, TimeUnit.SECONDS, EmailRegistrationActivity.this, new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
                     @Override
-                    public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
+                    public void onVerificationCompleted(final PhoneAuthCredential phoneAuthCredential) {
                         Toast.makeText(EmailRegistrationActivity.this, "верификация успешна", Toast.LENGTH_SHORT).show();
 
 
+                        mAuth.getCurrentUser().linkWithCredential(phoneAuthCredential).addOnCompleteListener(EmailRegistrationActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if(task.isSuccessful())
+                                {
+                                    firebaseDatabase = FirebaseDatabase.getInstance();
+                                    final DatabaseReference databaseReference = firebaseDatabase.getReference("users").child(mAuth.getCurrentUser().getUid());
+                                    databaseReference.child("gmail").setValue(email);
+                                    databaseReference.child("points").setValue(0);
+                                    databaseReference.child("phone").setValue(phone);
 
+
+                                    Toast.makeText(EmailRegistrationActivity.this, "телефон подтверждён, регистрация успешна", Toast.LENGTH_SHORT).show();
+                                    closeActivity();
+                                }
+                                else
+                                    Toast.makeText(EmailRegistrationActivity.this, "чё снизу(сверху)", Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
 
                     }
@@ -189,38 +206,24 @@ public class EmailRegistrationActivity extends AppCompatActivity{
                                 if(!ETConfirmationCode.getText().toString().equals(""))
                                 {
                                     final PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.getCredential(s,ETConfirmationCode.getText().toString());
-                                    mAuth.signInWithCredential(phoneAuthCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
+                                    mAuth.getCurrentUser().linkWithCredential(phoneAuthCredential).addOnCompleteListener(EmailRegistrationActivity.this, new OnCompleteListener<AuthResult>() {
                                         @Override
                                         public void onComplete(@NonNull Task<AuthResult> task) {
                                             if(task.isSuccessful())
                                             {
+                                                firebaseDatabase = FirebaseDatabase.getInstance();
+                                                final DatabaseReference databaseReference = firebaseDatabase.getReference("users").child(mAuth.getCurrentUser().getUid());
+                                                databaseReference.child("gmail").setValue(email);
+                                                databaseReference.child("points").setValue(0);
+                                                databaseReference.child("phone").setValue(phone);
 
-                                                Toast.makeText(EmailRegistrationActivity.this, "вход успешна", Toast.LENGTH_SHORT).show();
-                                                //TODO вдо сюда робит, потом уходит в else: проблема в линке(?) надо трайнуть мёрдж
-                                                AuthCredential credential = EmailAuthProvider.getCredential(email,password);
 
-                                                mAuth.getCurrentUser().linkWithCredential(credential).addOnCompleteListener(EmailRegistrationActivity.this, new OnCompleteListener<AuthResult>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<AuthResult> task) {
-                                                        if(task.isSuccessful())
-                                                        {
-                                                            firebaseDatabase = FirebaseDatabase.getInstance();
-                                                            final DatabaseReference databaseReference = firebaseDatabase.getReference("users").child(mAuth.getCurrentUser().getUid());
-                                                            databaseReference.child("gmail").setValue(email);
-                                                            databaseReference.child("points").setValue(0);
-                                                            databaseReference.child("phone").setValue(phone);
-
-                                                            Toast.makeText(EmailRegistrationActivity.this, "телефон подтверждён, регистрация успешна", Toast.LENGTH_SHORT).show();
-                                                            closeActivity();
-                                                        }
-                                                        else
-                                                            Toast.makeText(EmailRegistrationActivity.this, "чё снизу", Toast.LENGTH_SHORT).show();
-                                                    }
-                                                });
-
+                                                Toast.makeText(EmailRegistrationActivity.this, "телефон подтверждён, регистрация успешна", Toast.LENGTH_SHORT).show();
+                                                closeActivity();
                                             }
                                             else
-                                                Toast.makeText(EmailRegistrationActivity.this, "вход провалена", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(EmailRegistrationActivity.this, "чё снизу(снизу)", Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                 }

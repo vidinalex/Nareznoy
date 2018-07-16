@@ -24,9 +24,14 @@ public class LeftSideToolbarDrawer extends Drawer {
 
     private FirebaseAuth mAuth;
 
+    private AppCompatActivity activity;
+
     LeftSideToolbarDrawer(final AppCompatActivity activity, android.support.v7.widget.Toolbar toolbar, final Drawer.Result result)
     {
+        this.activity = activity;
         mAuth = FirebaseAuth.getInstance();
+
+
         withActivity(activity);
         withToolbar(toolbar);
         withActionBarDrawerToggle(true);
@@ -84,6 +89,7 @@ public class LeftSideToolbarDrawer extends Drawer {
                             }
                             else
                             {
+
                                 Intent intent = new Intent(activity, LoginActivity.class);
                                 activity.startActivity(intent);
                             }
@@ -151,6 +157,25 @@ public class LeftSideToolbarDrawer extends Drawer {
     public Result build() {
         return super.build();
     }
+
+
+
+//    private void initAuthActivity ()
+//    {
+//        final int RC_SIGN_IN = 123;
+//
+//        List<AuthUI.IdpConfig> providers = Arrays.asList(
+//                new AuthUI.IdpConfig.EmailBuilder().build(),
+//                new AuthUI.IdpConfig.PhoneBuilder().build());
+//
+//// Create and launch sign-in intent
+//        activity.startActivityForResult(
+//                AuthUI.getInstance()
+//                        .createSignInIntentBuilder()
+//                        .setAvailableProviders(providers)
+//                        .build(),
+//                RC_SIGN_IN);
+//    }
 
 
 }
