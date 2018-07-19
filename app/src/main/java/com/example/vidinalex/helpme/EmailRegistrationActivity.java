@@ -20,6 +20,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class EmailRegistrationActivity extends AppCompatActivity{
@@ -54,7 +56,7 @@ public class EmailRegistrationActivity extends AppCompatActivity{
         bRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bRegister.setOnClickListener(null);
+
                 preRegistration();
             }
         });
@@ -74,63 +76,97 @@ public class EmailRegistrationActivity extends AppCompatActivity{
 
     public void preRegistration() {
 
-        String email = ETemail.getText().toString();
-        if(email.substring(0, email.indexOf("@")).length() >=6)
+        if(checkRegDataCorrectness())
         {
-            if (ETpassword.getText().toString().length() >= 6)
-            {
-                if (ETpassword.getText().toString().equals(ETpasswordConfirmation.getText().toString()))
-                    registration(ETemail.getText().toString().trim(), ETpassword.getText().toString(), ETphone.getText().toString().trim());
-                else
-                    Toast.makeText(EmailRegistrationActivity.this, "Пароли не совпадают", Toast.LENGTH_SHORT).show();
-            }
-            else
-                Toast.makeText(EmailRegistrationActivity.this, "Пароль не менее 6 символов", Toast.LENGTH_SHORT).show();
+            registration(ETemail.getText().toString().trim(), ETpassword.getText().toString().trim(), ETphone.getText().toString().trim());
         }
-        else
-            Toast.makeText(EmailRegistrationActivity.this, "Имэйл не менее 6 символов", Toast.LENGTH_SHORT).show();
 
     }
 
+    private boolean checkRegDataCorrectness()
+    {
+        String email = ETemail.getText().toString().trim();
+        String password = ETpassword.getText().toString().trim();
+        String passwordConf = ETpasswordConfirmation.getText().toString().trim();
+        String phone = ETphone.getText().toString().trim();
 
-    public void registration (final String email , final String password, final String phone) {
+        Pattern pattern = Pattern.compile("^[a-zA-Z0-9_!#$%&'*+\\-/=?^`{|}~]{3,}@[a-zA-Z0-9_]+\\.[a-z0-9_]+$");
+        Matcher matcher = pattern.matcher(email);
+        if(!matcher.matches())
+        {
+            Toast.makeText(EmailRegistrationActivity.this, "Имэйл не менее 6 симв до @ и по формату", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        pattern = Pattern.compile("^[a-zA-Z0-9]{6,}$");
+        matcher = pattern.matcher(password);
+        if(!matcher.matches())
+        {
+            Toast.makeText(EmailRegistrationActivity.this, "Пароль >= 6 симв; a-zA-z0-9", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(!password.equals(passwordConf))
+        {
+            Toast.makeText(EmailRegistrationActivity.this, "Пароли не совпадают", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(!phone.equals(""))
+        {
+            pattern = Pattern.compile("^((\\+7)|(8))[0-9]{10}$");
+            matcher = pattern.matcher(phone);
+            if(!matcher.matches())
+            {
+                Toast.makeText(EmailRegistrationActivity.this, "Телефон не соответствует формату", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }
+
+        return true;
+    }
 
 
-            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
+    public void registration (final String email , final String password, final String phone)
+    {
+
+    mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        @Override
+        public void onComplete(@NonNull Task<AuthResult> task) {
+            if (task.isSuccessful()) {
+
+                if(!phone.equals(""))
+                {
+                    bRegister.setText("Подтвердить номер");
+                    String rightPhone;
+                    if(phone.charAt(0) == '8')
+                        rightPhone = phone.replaceFirst("8", "+7");
+                    else
+                        rightPhone = phone;
 
 
-
-                        if(!phone.equals("")) //TODO запилить систему проверки, номер это или хуета написана
-                        {
-                            bRegister.setText("Подтвердить номер");
-                            verifyPhoneNumberAndLinkAccs(phone, email, password);
-
-                        }
-                        else
-                        {
-                            mAuth.signInWithEmailAndPassword(email,password);
-
-                            firebaseDatabase = FirebaseDatabase.getInstance();
-                            final DatabaseReference databaseReference = firebaseDatabase.getReference("users").child(mAuth.getCurrentUser().getUid());
-                            databaseReference.child("gmail").setValue(email);
-                            databaseReference.child("points").setValue(0);
-                            databaseReference.child("phone").setValue(phone);
-
-
-                            Toast.makeText(EmailRegistrationActivity.this, "телефон НЕ подтверждён, регистрация успешна", Toast.LENGTH_SHORT).show();
-                            closeActivity();
-                        }
-
-
-
-
-                    } else
-                        Toast.makeText(EmailRegistrationActivity.this, "Пользователь с таким имэйлом уже есть", Toast.LENGTH_SHORT).show();
+                    verifyPhoneNumberAndLinkAccs(rightPhone, email, password);
                 }
-            });
+                else
+                {
+                    mAuth.signInWithEmailAndPassword(email,password);
+
+                    firebaseDatabase = FirebaseDatabase.getInstance();
+                    final DatabaseReference databaseReference = firebaseDatabase.getReference("users").child(mAuth.getCurrentUser().getUid());
+                    databaseReference.child("gmail").setValue(email);
+                    databaseReference.child("points").setValue(0);
+                    databaseReference.child("phone").setValue(phone);
+
+
+                    Toast.makeText(EmailRegistrationActivity.this, "телефон НЕ указан, регистрация успешна", Toast.LENGTH_SHORT).show();
+                    closeActivity();
+                }
+
+
+            } else
+                Toast.makeText(EmailRegistrationActivity.this, "Пользователь с таким имэйлом уже есть", Toast.LENGTH_SHORT).show();
+        }
+    });
 
     }
 
@@ -158,14 +194,18 @@ public class EmailRegistrationActivity extends AppCompatActivity{
         super.onRestart();
     }
 
+
+
+
+
+
+
     private void verifyPhoneNumberAndLinkAccs(final String phone, final String email, final String password)
     {
         PhoneAuthProvider.getInstance().verifyPhoneNumber
                 (phone, 60, TimeUnit.SECONDS, EmailRegistrationActivity.this, new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
                     @Override
                     public void onVerificationCompleted(final PhoneAuthCredential phoneAuthCredential) {
-                        Toast.makeText(EmailRegistrationActivity.this, "верификация успешна", Toast.LENGTH_SHORT).show();
-
 
                         mAuth.getCurrentUser().linkWithCredential(phoneAuthCredential).addOnCompleteListener(EmailRegistrationActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
@@ -183,7 +223,10 @@ public class EmailRegistrationActivity extends AppCompatActivity{
                                     closeActivity();
                                 }
                                 else
-                                    Toast.makeText(EmailRegistrationActivity.this, "чё снизу(сверху)", Toast.LENGTH_SHORT).show();
+                                {
+                                    mAuth.getCurrentUser().delete();
+                                    Toast.makeText(EmailRegistrationActivity.this, "пользователь с таким номером уже зареган", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         });
 
@@ -193,6 +236,7 @@ public class EmailRegistrationActivity extends AppCompatActivity{
                     @Override
                     public void onVerificationFailed(FirebaseException e) {
                         Toast.makeText(EmailRegistrationActivity.this, "верификация провалена", Toast.LENGTH_SHORT).show();
+                        mAuth.getCurrentUser().delete();
                     }
 
                     @Override
@@ -223,7 +267,8 @@ public class EmailRegistrationActivity extends AppCompatActivity{
                                                 closeActivity();
                                             }
                                             else
-                                                Toast.makeText(EmailRegistrationActivity.this, "чё снизу(снизу)", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(EmailRegistrationActivity.this, "пользователь с таким номером уже зареган или код неверен", Toast.LENGTH_SHORT).show();
+
                                         }
                                     });
                                 }
