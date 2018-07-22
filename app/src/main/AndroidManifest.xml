@@ -3,6 +3,8 @@
     package="com.example.vidinalex.helpme">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -23,14 +25,26 @@
             android:label="@string/login" />
         <activity
             android:name=".EmailRegistrationActivity"
-            android:label="@string/registration" />
+            android:label="@string/registration"/>
+
         <activity
             android:name=".ProfileActivity"
             android:label="@string/drawer_item_profile" />
         <activity
             android:name=".SettingsActivity"
             android:label="@string/action_settings" />
-        <activity android:name=".PhoneLoginActivity"></activity>
+        <activity android:name=".PhoneLoginActivity"/>
+        <activity
+            android:name=".PhoneVerificationActivityDialog"
+            android:theme="@style/Theme.AppCompat.Dialog"/>
+
+        <receiver
+            android:name=".PhoneLinker">
+            <intent-filter>
+                <action android:name="verificationCodeGot"/>
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

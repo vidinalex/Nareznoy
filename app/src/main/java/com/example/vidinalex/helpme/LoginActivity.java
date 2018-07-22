@@ -41,6 +41,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         mSettings2 = getSharedPreferences(APP_PREFERENCES2, Context.MODE_PRIVATE);
 
+        PermissionManager.checkPermissionsAndRequest(this, PermissionManager.DEFAULT_PERMISION_PACK);
+
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -66,7 +68,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         ETemail = (EditText) findViewById(R.id.etEmail);
         ETpassword = (EditText) findViewById(R.id.etPassword);
 
-        refToReg = (TextView) findViewById(R.id.tvRegisterHere);
+        refToReg = findViewById(R.id.tvRegisterHere);
         refToReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

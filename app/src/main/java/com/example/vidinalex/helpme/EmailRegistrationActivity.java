@@ -1,6 +1,9 @@
 package com.example.vidinalex.helpme;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -11,15 +14,11 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.PhoneAuthCredential;
-import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,13 +32,16 @@ public class EmailRegistrationActivity extends AppCompatActivity{
     private EditText ETpassword;
     private EditText ETpasswordConfirmation;
     private EditText ETphone;
-    private EditText ETConfirmationCode;
     private Button bRegister;
+    public String regStage = "Регистрация провалена";
+    BroadcastReceiver broadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_email_registration);
+
+        PermissionManager.checkPermissionsAndRequest(this, PermissionManager.DEFAULT_PERMISION_PACK);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -48,16 +50,24 @@ public class EmailRegistrationActivity extends AppCompatActivity{
         ETpassword = (EditText) findViewById(R.id.etPassword);
         ETpasswordConfirmation = (EditText) findViewById(R.id.etPasswordConfirmation);
         ETphone = findViewById(R.id.etPhoneNumber);
-        ETConfirmationCode = findViewById(R.id.etConfirmationCode);
         bRegister = findViewById(R.id.bRegister);
 
         Button refToLog = (Button) findViewById(R.id.bRefLogin);
+
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                regStage = "телефон подтверждён, регистрация успешна";
+            }
+        };
+
+        registerReceiver(broadcastReceiver, new IntentFilter("PhoneConfirmed"));
 
         bRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                preRegistration();
+                initFullRegistrationProcess();
             }
         });
 
@@ -73,14 +83,13 @@ public class EmailRegistrationActivity extends AppCompatActivity{
 
 
 
-
-    public void preRegistration() {
+//TODO 228
+    public void initFullRegistrationProcess() {
 
         if(checkRegDataCorrectness())
         {
-            registration(ETemail.getText().toString().trim(), ETpassword.getText().toString().trim(), ETphone.getText().toString().trim());
+            registerWithEmailAndPassword(ETemail.getText().toString().trim(), ETpassword.getText().toString().trim());
         }
-
     }
 
     private boolean checkRegDataCorrectness()
@@ -127,48 +136,59 @@ public class EmailRegistrationActivity extends AppCompatActivity{
     }
 
 
-    public void registration (final String email , final String password, final String phone)
+
+    private void registerWithEmailAndPassword(final String email, final String password)
     {
 
-    mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-        @Override
-        public void onComplete(@NonNull Task<AuthResult> task) {
-            if (task.isSuccessful()) {
-
-                if(!phone.equals(""))
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(EmailRegistrationActivity.this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful())
                 {
-                    bRegister.setText("Подтвердить номер");
-                    String rightPhone;
-                    if(phone.charAt(0) == '8')
-                        rightPhone = phone.replaceFirst("8", "+7");
-                    else
-                        rightPhone = phone;
-
-
-                    verifyPhoneNumberAndLinkAccs(rightPhone, email, password);
-                }
-                else
-                {
-                    mAuth.signInWithEmailAndPassword(email,password);
-
                     firebaseDatabase = FirebaseDatabase.getInstance();
                     final DatabaseReference databaseReference = firebaseDatabase.getReference("users").child(mAuth.getCurrentUser().getUid());
                     databaseReference.child("gmail").setValue(email);
                     databaseReference.child("points").setValue(0);
-                    databaseReference.child("phone").setValue(phone);
+                    databaseReference.child("phone").setValue("");
+
+                    regStage = "телефон НЕ подтверждён или НЕ указан, регистрация успешна";
+                    mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(!ETphone.getText().toString().equals(""))
+                            {
+                                bRegister.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        PhoneLinker.linkPhoneToAccount(ETphone.getText().toString().trim(), EmailRegistrationActivity.this);
+                                    }
+                                });
+                                PhoneLinker.linkPhoneToAccount(replaceFirstSymbolsInPhone(ETphone.getText().toString().trim()), EmailRegistrationActivity.this);
+
+                            }
+                            else
+                                EmailRegistrationActivity.this.closeActivity();
+                        }
+                    });
 
 
-                    Toast.makeText(EmailRegistrationActivity.this, "телефон НЕ указан, регистрация успешна", Toast.LENGTH_SHORT).show();
-                    closeActivity();
-                }
 
-
-            } else
-                Toast.makeText(EmailRegistrationActivity.this, "Пользователь с таким имэйлом уже есть", Toast.LENGTH_SHORT).show();
-        }
-    });
-
+                } else
+                    Toast.makeText(EmailRegistrationActivity.this, "Пользователь с таким имэйлом уже есть", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
+    private String replaceFirstSymbolsInPhone(String phone)
+    {
+        String rightPhone;
+        if(phone.charAt(0) == '8')
+            rightPhone = phone.replaceFirst("8", "+7");
+        else
+            rightPhone = phone;
+        return rightPhone;
+    }
+
 
     private void closeActivity() {
         this.finish();
@@ -181,6 +201,7 @@ public class EmailRegistrationActivity extends AppCompatActivity{
 
     @Override
     protected void onDestroy() {
+        Toast.makeText(EmailRegistrationActivity.this, regStage, Toast.LENGTH_SHORT).show();
         super.onDestroy();
     }
 
@@ -194,90 +215,5 @@ public class EmailRegistrationActivity extends AppCompatActivity{
         super.onRestart();
     }
 
-
-
-
-
-
-
-    private void verifyPhoneNumberAndLinkAccs(final String phone, final String email, final String password)
-    {
-        PhoneAuthProvider.getInstance().verifyPhoneNumber
-                (phone, 60, TimeUnit.SECONDS, EmailRegistrationActivity.this, new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-                    @Override
-                    public void onVerificationCompleted(final PhoneAuthCredential phoneAuthCredential) {
-
-                        mAuth.getCurrentUser().linkWithCredential(phoneAuthCredential).addOnCompleteListener(EmailRegistrationActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if(task.isSuccessful())
-                                {
-                                    firebaseDatabase = FirebaseDatabase.getInstance();
-                                    final DatabaseReference databaseReference = firebaseDatabase.getReference("users").child(mAuth.getCurrentUser().getUid());
-                                    databaseReference.child("gmail").setValue(email);
-                                    databaseReference.child("points").setValue(0);
-                                    databaseReference.child("phone").setValue(phone);
-
-
-                                    Toast.makeText(EmailRegistrationActivity.this, "телефон подтверждён, регистрация успешна", Toast.LENGTH_SHORT).show();
-                                    closeActivity();
-                                }
-                                else
-                                {
-                                    mAuth.getCurrentUser().delete();
-                                    Toast.makeText(EmailRegistrationActivity.this, "пользователь с таким номером уже зареган", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-
-
-                    }
-
-                    @Override
-                    public void onVerificationFailed(FirebaseException e) {
-                        Toast.makeText(EmailRegistrationActivity.this, "верификация провалена", Toast.LENGTH_SHORT).show();
-                        mAuth.getCurrentUser().delete();
-                    }
-
-                    @Override
-                    public void onCodeSent(final String s, final PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-                        super.onCodeSent(s, forceResendingToken);
-                        ETConfirmationCode.setVisibility(View.VISIBLE);
-                        bRegister.setText("ПРОДОЛЖИТЬ"); //ytyflf
-                        bRegister.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                if(!ETConfirmationCode.getText().toString().equals(""))
-                                {
-                                    final PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.getCredential(s,ETConfirmationCode.getText().toString());
-
-                                    mAuth.getCurrentUser().linkWithCredential(phoneAuthCredential).addOnCompleteListener(EmailRegistrationActivity.this, new OnCompleteListener<AuthResult>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<AuthResult> task) {
-                                            if(task.isSuccessful())
-                                            {
-                                                firebaseDatabase = FirebaseDatabase.getInstance();
-                                                final DatabaseReference databaseReference = firebaseDatabase.getReference("users").child(mAuth.getCurrentUser().getUid());
-                                                databaseReference.child("gmail").setValue(email);
-                                                databaseReference.child("points").setValue(0);
-                                                databaseReference.child("phone").setValue(phone);
-
-
-                                                Toast.makeText(EmailRegistrationActivity.this, "телефон подтверждён, регистрация успешна", Toast.LENGTH_SHORT).show();
-                                                closeActivity();
-                                            }
-                                            else
-                                                Toast.makeText(EmailRegistrationActivity.this, "пользователь с таким номером уже зареган или код неверен", Toast.LENGTH_SHORT).show();
-
-                                        }
-                                    });
-                                }
-                                else
-                                    Toast.makeText(EmailRegistrationActivity.this, "Введите код", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                });
-    }
 
 }

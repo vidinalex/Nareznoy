@@ -39,10 +39,8 @@ public class LeftSideToolbarDrawer extends Drawer {
         addDrawerItems(
                 new PrimaryDrawerItem().withName(R.string.drawer_item_profile).withIcon(FontAwesome.Icon.faw_home).withBadge("99").withIdentifier(1),
                 new PrimaryDrawerItem().withName(R.string.drawer_main_menu).withIcon(FontAwesome.Icon.faw_book),
-                //new PrimaryDrawerItem().withName(R.string.drawer_item_custom).withIcon(FontAwesome.Icon.faw_eye).withBadge("6").withIdentifier(2),
                 new SectionDrawerItem().withName(R.string.drawer_item_settings),
                 new SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(FontAwesome.Icon.faw_cog),
-                //new SecondaryDrawerItem().withName(R.string.drawer_item_open_source).withIcon(FontAwesome.Icon.faw_question).setEnabled(false),
                 new DividerDrawerItem(),
                 new SecondaryDrawerItem().withName(R.string.drawer_item_contact).withIcon(FontAwesome.Icon.faw_github).withBadge("12+").withIdentifier(1)
             );
@@ -157,25 +155,5 @@ public class LeftSideToolbarDrawer extends Drawer {
     public Result build() {
         return super.build();
     }
-
-
-
-//    private void initAuthActivity ()
-//    {
-//        final int RC_SIGN_IN = 123;
-//
-//        List<AuthUI.IdpConfig> providers = Arrays.asList(
-//                new AuthUI.IdpConfig.EmailBuilder().build(),
-//                new AuthUI.IdpConfig.PhoneBuilder().build());
-//
-//// Create and launch sign-in intent
-//        activity.startActivityForResult(
-//                AuthUI.getInstance()
-//                        .createSignInIntentBuilder()
-//                        .setAvailableProviders(providers)
-//                        .build(),
-//                RC_SIGN_IN);
-//    }
-
 
 }

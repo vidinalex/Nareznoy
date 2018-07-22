@@ -73,18 +73,6 @@
 
         </LinearLayout>
 
-        <EditText
-            android:layout_marginTop="5dp"
-            android:id="@+id/etConfirmationCode"
-            android:textColorHint="@android:color/darker_gray"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Код подтверждения"
-            android:textSize="20sp"
-            android:visibility="invisible"
-            android:textColor="@android:color/darker_gray"
-            android:inputType="number" />
-
 
         <Button
             android:layout_marginTop="5dp"

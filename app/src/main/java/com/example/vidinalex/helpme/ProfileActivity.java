@@ -26,6 +26,9 @@ public class ProfileActivity extends AppCompatActivity{
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        PermissionManager.checkPermissionsAndRequest(this, PermissionManager.DEFAULT_PERMISION_PACK);
+
         firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -43,7 +46,7 @@ public class ProfileActivity extends AppCompatActivity{
 
         DatabaseReference userDatabaseReference = firebaseDatabase.getReference("users").child(firebaseAuth.getCurrentUser().getUid());
 
-        //TODO если заходит с телефона - вылет(
+
 
             userDatabaseReference.child("gmail").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override

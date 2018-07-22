@@ -8,7 +8,11 @@ public class QrCodeGenerator {
 
     public static Bitmap generateQRCode(String userId)
     {
-        Bitmap myBitmap = QRCode.from(userId).withSize(2000,2000).bitmap();
-        return myBitmap;
+        return QRCode.from(userId).withSize(2000,2000).bitmap();
+    }
+
+    public static void generateQRAndWriteToCache(String userId, Bitmap QRCodeBitmap)
+    {
+        //TODO ну ты понял, кэш, да
     }
 }

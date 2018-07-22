@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,14 +35,20 @@ public class PhoneLoginActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_login);
 
+        //TODO первый заход с телефона - фатальная ошибка
+
+        PermissionManager.checkPermissionsAndRequest(this, PermissionManager.DEFAULT_PERMISION_PACK);
+
         mAuth = FirebaseAuth.getInstance();
 
-        Button refToLog = (Button) findViewById(R.id.bRefLogin);
+        ImageView refToEmail = findViewById(R.id.refToEmail);
 
-        refToLog.setOnClickListener(new View.OnClickListener() {
+        refToEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO ref to login on phone
+                Intent intent = new Intent(PhoneLoginActivity.this, LoginActivity.class);
+                PhoneLoginActivity.this.startActivity(intent);
+                PhoneLoginActivity.this.finish();
             }
         });
 
