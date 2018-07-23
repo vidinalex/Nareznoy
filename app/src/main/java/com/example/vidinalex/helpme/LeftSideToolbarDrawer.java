@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.mikepenz.iconics.typeface.FontAwesome;
@@ -62,7 +61,7 @@ public class LeftSideToolbarDrawer extends Drawer {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
                     if (drawerItem instanceof Nameable) {
 
-                        Toast.makeText(activity, activity.getString(((Nameable) drawerItem).getNameRes()), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(activity, activity.getString(((Nameable) drawerItem).getNameRes()), Toast.LENGTH_SHORT).show();
 
                         if(activity.getString(((Nameable) drawerItem).getNameRes()) == activity.getString(R.string.drawer_item_profile) && mAuth.getCurrentUser() != null){
                             if(!(activity instanceof MainActivity))
@@ -143,7 +142,7 @@ public class LeftSideToolbarDrawer extends Drawer {
                 // Обработка длинного клика, например, только для SecondaryDrawerItem
                 public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id, IDrawerItem drawerItem) {
                     if (drawerItem instanceof SecondaryDrawerItem) {
-                        Toast.makeText(activity, activity.getString(((SecondaryDrawerItem) drawerItem).getNameRes()), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(activity, activity.getString(((SecondaryDrawerItem) drawerItem).getNameRes()), Toast.LENGTH_SHORT).show();
                     }
                     return false;
                 }

@@ -37,8 +37,12 @@ public class ProfileActivity extends AppCompatActivity{
 
 
         final ImageView qrCode = findViewById(R.id.qrCode);
-        Bitmap qrCodeBitmap = QrCodeGenerator.generateQRCode(firebaseAuth.getUid());
+        final String uid = firebaseAuth.getUid();
+        Bitmap qrCodeBitmap = QrCodeGenerator.generateQRCodeBitmap(uid);
+        QrCodeGenerator.writeUidToCache(uid);
         qrCode.setImageBitmap(qrCodeBitmap);
+
+
 
 
 
@@ -79,6 +83,9 @@ public class ProfileActivity extends AppCompatActivity{
 
 
     }
+
+
+
 
 
 

@@ -83,7 +83,6 @@ public class EmailRegistrationActivity extends AppCompatActivity{
 
 
 
-//TODO 228
     public void initFullRegistrationProcess() {
 
         if(checkRegDataCorrectness())
@@ -202,6 +201,7 @@ public class EmailRegistrationActivity extends AppCompatActivity{
     @Override
     protected void onDestroy() {
         Toast.makeText(EmailRegistrationActivity.this, regStage, Toast.LENGTH_SHORT).show();
+        unregisterReceiver(broadcastReceiver);
         super.onDestroy();
     }
 

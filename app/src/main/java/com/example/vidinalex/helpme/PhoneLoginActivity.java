@@ -35,7 +35,7 @@ public class PhoneLoginActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_login);
 
-        //TODO первый заход с телефона - фатальная ошибка
+        //TODO первый заход с телефона - фатальная ошибка: мб сыграть через эксепшоны и удалять пользователя на кетче
 
         PermissionManager.checkPermissionsAndRequest(this, PermissionManager.DEFAULT_PERMISION_PACK);
 

@@ -16,6 +16,14 @@ public class MainActivity extends AppCompatActivity {
 
         PermissionManager.checkPermissionsAndRequest(this, PermissionManager.DEFAULT_PERMISION_PACK);
 
+
+
+        if(!InternetChecker.checkInternet(getApplicationContext()))
+        {
+            //TODO грузим новости из кэша
+        }
+
+
         drawerResult = LeftSideToolbarInitializator.initNewToolbar(this);
 
     }
@@ -29,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
+
+
 
 
 }

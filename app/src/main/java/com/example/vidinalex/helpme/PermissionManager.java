@@ -6,7 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 public class PermissionManager {
     public static final String[] DEFAULT_PERMISION_PACK = new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE,
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            android.Manifest.permission.INTERNET};
+            android.Manifest.permission.INTERNET,
+            android.Manifest.permission.ACCESS_NETWORK_STATE};
 
     public static void checkPermissionsAndRequest(AppCompatActivity activity, String[] permissions)
     {
@@ -34,6 +35,7 @@ public class PermissionManager {
                 }
             }
 
+            //TODO настроить коллбэк на получение или отклонение пермишна
             activity.requestPermissions(permissionsToRequest, 777);
         }
 
