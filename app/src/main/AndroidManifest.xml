@@ -26,36 +26,31 @@
             android:label="@string/login" />
         <activity
             android:name=".EmailRegistrationActivity"
-            android:label="@string/registration"/>
-
+            android:label="@string/registration" />
         <activity
             android:name=".ProfileActivity"
             android:label="@string/drawer_item_profile" />
         <activity
             android:name=".SettingsActivity"
             android:label="@string/action_settings" />
-        <activity android:name=".PhoneLoginActivity"/>
+        <activity android:name=".PhoneLoginActivity" />
         <activity
             android:name=".PhoneVerificationActivityDialog"
-            android:theme="@style/Theme.AppCompat.Dialog"/>
-
+            android:theme="@style/Theme.AppCompat.Dialog" />
         <activity android:name=".NoInternetActivity" />
 
-        <receiver
-            android:name=".PhoneLinker">
+        <receiver android:name=".PhoneLinker">
             <intent-filter>
-                <action android:name="verificationCodeGot"/>
+                <action android:name="verificationCodeGot" />
             </intent-filter>
         </receiver>
-
-        <receiver
-            android:name=".InternetConnectionReceiver">
+        <receiver android:name=".InternetConnectionReceiver">
             <intent-filter>
                 <action android:name="android." />
             </intent-filter>
         </receiver>
 
-
+        <activity android:name=".PhoneEnterActivity"></activity>
     </application>
 
 </manifest>

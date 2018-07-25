@@ -61,7 +61,6 @@ public class EmailRegistrationActivity extends AppCompatActivity{
             }
         };
 
-        registerReceiver(broadcastReceiver, new IntentFilter("PhoneConfirmed"));
 
         bRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,6 +192,12 @@ public class EmailRegistrationActivity extends AppCompatActivity{
         this.finish();
     }
 
+    protected void onStart()
+    {
+        super.onStart();
+        registerReceiver(broadcastReceiver, new IntentFilter("PhoneConfirmed"));
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -201,13 +206,13 @@ public class EmailRegistrationActivity extends AppCompatActivity{
     @Override
     protected void onDestroy() {
         Toast.makeText(EmailRegistrationActivity.this, regStage, Toast.LENGTH_SHORT).show();
-        unregisterReceiver(broadcastReceiver);
         super.onDestroy();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        unregisterReceiver(broadcastReceiver);
     }
 
     @Override

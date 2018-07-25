@@ -29,8 +29,19 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="21dp"
+            android:textSize="30sp"
             android:layout_marginTop="96dp"
             android:text="Выйти из аккаунта" />
+
+        <Button
+            android:id="@+id/bConnectPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bSignout"
+            android:textSize="30sp"
+            android:text="Подключить телефон" />
+
+
 
     </RelativeLayout>
 
