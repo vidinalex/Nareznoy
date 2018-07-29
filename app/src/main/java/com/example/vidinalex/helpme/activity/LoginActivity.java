@@ -1,4 +1,4 @@
-package com.example.vidinalex.helpme;
+package com.example.vidinalex.helpme.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.vidinalex.helpme.helpers.PermissionManager;
+import com.example.vidinalex.helpme.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;

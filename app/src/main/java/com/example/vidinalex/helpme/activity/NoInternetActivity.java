@@ -1,4 +1,4 @@
-package com.example.vidinalex.helpme;
+package com.example.vidinalex.helpme.activity;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -6,6 +6,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.vidinalex.helpme.helpers.QrCodeGenerator;
+import com.example.vidinalex.helpme.R;
 
 public class NoInternetActivity extends AppCompatActivity {
 

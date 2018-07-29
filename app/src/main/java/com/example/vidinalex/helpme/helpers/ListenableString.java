@@ -1,4 +1,4 @@
-package com.example.vidinalex.helpme;
+package com.example.vidinalex.helpme.helpers;
 
 public class ListenableString {
 

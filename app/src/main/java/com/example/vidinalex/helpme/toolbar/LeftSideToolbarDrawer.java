@@ -1,4 +1,4 @@
-package com.example.vidinalex.helpme;
+package com.example.vidinalex.helpme.toolbar;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,6 +8,11 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 
+import com.example.vidinalex.helpme.R;
+import com.example.vidinalex.helpme.activity.LoginActivity;
+import com.example.vidinalex.helpme.activity.MainActivity;
+import com.example.vidinalex.helpme.activity.ProfileActivity;
+import com.example.vidinalex.helpme.activity.SettingsActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.mikepenz.iconics.typeface.FontAwesome;
 import com.mikepenz.materialdrawer.Drawer;

@@ -1,4 +1,4 @@
-package com.example.vidinalex.helpme;
+package com.example.vidinalex.helpme.helpers;
 
 import android.graphics.Bitmap;
 import android.os.Environment;
@@ -26,7 +26,9 @@ public class QrCodeGenerator {
         }
         try{
             File file = new File
-                    (Environment.getExternalStorageDirectory() + File.separator + "lastUser.txt");
+                    (GlobalVars.getFileSavingPath() + "lastUser.txt");
+
+
             //file.createNewFile();
             FileOutputStream fileOutputStream = new FileOutputStream(file);
             fileOutputStream.write(userId.getBytes());
@@ -45,7 +47,7 @@ public class QrCodeGenerator {
             }
 
             File file = new File
-                    (Environment.getExternalStorageDirectory() + File.separator + "lastUser.txt");
+                    (GlobalVars.getFileSavingPath() + "lastUser.txt");
 
             try {
                 BufferedReader br = new BufferedReader(new FileReader(file));

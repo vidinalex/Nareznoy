@@ -1,4 +1,4 @@
-package com.example.vidinalex.helpme;
+package com.example.vidinalex.helpme.activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,6 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.example.vidinalex.helpme.helpers.PhoneLinker;
+import com.example.vidinalex.helpme.R;
 
 public class PhoneEnterActivity extends AppCompatActivity {
 

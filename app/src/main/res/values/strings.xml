@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Pomogite</string>
+    <string name="app_name">BugBox</string>
     <string name="action_settings">Settings</string>
     <string name="drawer_main_menu">Главное Меню</string>
     <string name="drawer_item_profile">Профиль</string>

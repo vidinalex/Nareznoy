@@ -1,4 +1,4 @@
-package com.example.vidinalex.helpme;
+package com.example.vidinalex.helpme.helpers;
 
 import android.content.pm.PackageManager;
 import android.support.v7.app.AppCompatActivity;
