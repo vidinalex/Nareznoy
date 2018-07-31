@@ -9,9 +9,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
-import com.example.vidinalex.helpme.helpers.PhoneLinker;
 import com.example.vidinalex.helpme.R;
+import com.example.vidinalex.helpme.helpers.PhoneLinker;
+import com.example.vidinalex.helpme.helpers.RegisterDataFilter;
 
 public class PhoneEnterActivity extends AppCompatActivity {
 
@@ -38,34 +40,12 @@ public class PhoneEnterActivity extends AppCompatActivity {
         bGetNum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO вставить проверку на правильность телефона(новый класс из метода проверки по маскам) и если телефон уже есть или телефон зареган на другого чела
-                PhoneLinker.linkPhoneToAccount(etPhone.getText().toString().trim(), PhoneEnterActivity.this);
+                if(RegisterDataFilter.checkPhone(PhoneEnterActivity.this, etPhone.getText().toString().trim()))
+                    PhoneLinker.linkPhoneToAccount(etPhone.getText().toString().trim(), PhoneEnterActivity.this);
+                else
+                    Toast.makeText(PhoneEnterActivity.this, "телефон не по формату", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
 }

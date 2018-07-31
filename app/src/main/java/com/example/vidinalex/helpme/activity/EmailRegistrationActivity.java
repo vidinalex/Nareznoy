@@ -12,18 +12,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.vidinalex.helpme.R;
 import com.example.vidinalex.helpme.helpers.PermissionManager;
 import com.example.vidinalex.helpme.helpers.PhoneLinker;
-import com.example.vidinalex.helpme.R;
+import com.example.vidinalex.helpme.helpers.RegisterDataFilter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 public class EmailRegistrationActivity extends AppCompatActivity{
@@ -87,53 +85,13 @@ public class EmailRegistrationActivity extends AppCompatActivity{
 
     public void initFullRegistrationProcess() {
 
-        if(checkRegDataCorrectness())
+        if(RegisterDataFilter.checkRegDataCorrectness(this, ETemail.getText().toString().trim(),
+                ETpassword.getText().toString().trim(),
+                ETpasswordConfirmation.getText().toString().trim(),
+                ETphone.getText().toString().trim()))
         {
             registerWithEmailAndPassword(ETemail.getText().toString().trim(), ETpassword.getText().toString().trim());
         }
-    }
-
-    private boolean checkRegDataCorrectness()
-    {
-        String email = ETemail.getText().toString().trim();
-        String password = ETpassword.getText().toString().trim();
-        String passwordConf = ETpasswordConfirmation.getText().toString().trim();
-        String phone = ETphone.getText().toString().trim();
-
-        Pattern pattern = Pattern.compile("^[a-zA-Z0-9_!#$%&'*+\\-/=?^`{|}~]{3,}@[a-zA-Z0-9_]+\\.[a-z0-9_]+$");
-        Matcher matcher = pattern.matcher(email);
-        if(!matcher.matches())
-        {
-            Toast.makeText(EmailRegistrationActivity.this, "Имэйл не менее 6 симв до @ и по формату", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        pattern = Pattern.compile("^[a-zA-Z0-9]{6,}$");
-        matcher = pattern.matcher(password);
-        if(!matcher.matches())
-        {
-            Toast.makeText(EmailRegistrationActivity.this, "Пароль >= 6 симв; a-zA-z0-9", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        if(!password.equals(passwordConf))
-        {
-            Toast.makeText(EmailRegistrationActivity.this, "Пароли не совпадают", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        if(!phone.equals(""))
-        {
-            pattern = Pattern.compile("^((\\+7)|(8))[0-9]{10}$");
-            matcher = pattern.matcher(phone);
-            if(!matcher.matches())
-            {
-                Toast.makeText(EmailRegistrationActivity.this, "Телефон не соответствует формату", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        }
-
-        return true;
     }
 
 

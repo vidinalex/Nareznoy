@@ -2,14 +2,16 @@ package com.example.vidinalex.helpme.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.vidinalex.helpme.toolbar.LeftSideToolbarInitializator;
-import com.example.vidinalex.helpme.helpers.PermissionManager;
 import com.example.vidinalex.helpme.R;
+import com.example.vidinalex.helpme.helpers.PermissionManager;
+import com.example.vidinalex.helpme.toolbar.LeftSideToolbarInitializator;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.PhoneAuthProvider;
 import com.mikepenz.materialdrawer.Drawer;
 
 
@@ -30,6 +32,13 @@ public class SettingsActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                managePhoneLinkButton();
+            }
+        });
+
         drawerResult = LeftSideToolbarInitializator.initNewToolbar(this);
 
         bToLogOut = (Button) findViewById(R.id.bSignout);
@@ -38,12 +47,9 @@ public class SettingsActivity extends AppCompatActivity {
         bConnectPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mAuth.getCurrentUser() != null)
-                {
-                    Intent intent = new Intent(SettingsActivity.this, PhoneEnterActivity.class);
-                    startActivity(intent);
-                    SettingsActivity.this.finish();
-                }
+                Intent intent = new Intent(SettingsActivity.this, PhoneEnterActivity.class);
+                startActivity(intent);
+                SettingsActivity.this.finish();
             }
         });
 
@@ -65,23 +71,18 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
+    private void managePhoneLinkButton()
+    {
+        if(mAuth.getCurrentUser() == null ||
+                mAuth.getCurrentUser().getProviders().contains(PhoneAuthProvider.PROVIDER_ID))
+            bConnectPhone.setVisibility(View.INVISIBLE);
+        else
+            bConnectPhone.setVisibility(View.VISIBLE);
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
+    protected void onStart() {
+        super.onStart();
+        managePhoneLinkButton();
     }
 }
