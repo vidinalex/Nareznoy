@@ -12,8 +12,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.vidinalex.helpme.R;
-import com.example.vidinalex.helpme.helpers.PhoneLinker;
-import com.example.vidinalex.helpme.helpers.RegisterDataFilter;
+import com.example.vidinalex.helpme.utils.PhoneLinker;
+import com.example.vidinalex.helpme.utils.RegisterDataFilter;
 
 public class PhoneEnterActivity extends AppCompatActivity {
 

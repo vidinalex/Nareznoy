@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.vidinalex.helpme.helpers.PermissionManager;
+import com.example.vidinalex.helpme.utils.PermissionManager;
 import com.example.vidinalex.helpme.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -39,7 +39,7 @@ public class PhoneLoginActivity extends AppCompatActivity implements View.OnClic
 
         //TODO первый заход с телефона - фатальная ошибка: мб сыграть через эксепшоны и удалять пользователя на кетче
 
-        PermissionManager.checkPermissionsAndRequest(this, PermissionManager.DEFAULT_PERMISION_PACK);
+        PermissionManager.checkPermissionsAndRequest(this, PermissionManager.DEFAULT_PERMISSION_PACK);
 
         mAuth = FirebaseAuth.getInstance();
 

@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.vidinalex.helpme.helpers.QrCodeGenerator;
+import com.example.vidinalex.helpme.utils.QrCodeGenerator;
 import com.example.vidinalex.helpme.R;
 
 public class NoInternetActivity extends AppCompatActivity {

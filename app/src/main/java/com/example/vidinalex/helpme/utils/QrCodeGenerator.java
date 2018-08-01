@@ -1,4 +1,4 @@
-package com.example.vidinalex.helpme.helpers;
+package com.example.vidinalex.helpme.utils;
 
 import android.graphics.Bitmap;
 import android.os.Environment;

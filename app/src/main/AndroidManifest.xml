@@ -35,16 +35,16 @@
             android:label="@string/action_settings" />
         <activity android:name=".activity.PhoneLoginActivity" />
         <activity
-            android:name=".fragments.PhoneVerificationActivityDialog"
+            android:name=".uifragments.PhoneVerificationActivityDialog"
             android:theme="@style/Theme.AppCompat.Dialog" />
         <activity android:name=".activity.NoInternetActivity" />
 
-        <receiver android:name=".helpers.PhoneLinker">
+        <receiver android:name=".utils.PhoneLinker">
             <intent-filter>
                 <action android:name="verificationCodeGot" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".helpers.InternetConnectionReceiver">
+        <receiver android:name=".utils.InternetConnectionReceiver">
             <intent-filter>
                 <action android:name="android." />
             </intent-filter>

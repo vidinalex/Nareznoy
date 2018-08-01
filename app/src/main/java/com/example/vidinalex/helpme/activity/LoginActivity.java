@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.vidinalex.helpme.helpers.PermissionManager;
+import com.example.vidinalex.helpme.utils.PermissionManager;
 import com.example.vidinalex.helpme.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         mSettings2 = getSharedPreferences(APP_PREFERENCES2, Context.MODE_PRIVATE);
 
-        PermissionManager.checkPermissionsAndRequest(this, PermissionManager.DEFAULT_PERMISION_PACK);
+        PermissionManager.checkPermissionsAndRequest(this, PermissionManager.DEFAULT_PERMISSION_PACK);
 
 
 

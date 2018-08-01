@@ -8,11 +8,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.vidinalex.helpme.helpers.GlobalVars;
-import com.example.vidinalex.helpme.helpers.InternetChecker;
+import com.example.vidinalex.helpme.utils.GlobalVars;
+import com.example.vidinalex.helpme.utils.InternetChecker;
 import com.example.vidinalex.helpme.toolbar.LeftSideToolbarInitializator;
-import com.example.vidinalex.helpme.helpers.PermissionManager;
-import com.example.vidinalex.helpme.helpers.QrCodeGenerator;
+import com.example.vidinalex.helpme.utils.PermissionManager;
+import com.example.vidinalex.helpme.utils.QrCodeGenerator;
 import com.example.vidinalex.helpme.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -34,7 +34,7 @@ public class ProfileActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        PermissionManager.checkPermissionsAndRequest(this, PermissionManager.DEFAULT_PERMISION_PACK);
+        PermissionManager.checkPermissionsAndRequest(this, PermissionManager.DEFAULT_PERMISSION_PACK);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();

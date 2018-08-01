@@ -1,4 +1,4 @@
-package com.example.vidinalex.helpme.helpers;
+package com.example.vidinalex.helpme.utils;
 
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;

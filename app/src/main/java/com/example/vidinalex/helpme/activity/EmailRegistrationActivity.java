@@ -13,9 +13,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.vidinalex.helpme.R;
-import com.example.vidinalex.helpme.helpers.PermissionManager;
-import com.example.vidinalex.helpme.helpers.PhoneLinker;
-import com.example.vidinalex.helpme.helpers.RegisterDataFilter;
+import com.example.vidinalex.helpme.utils.PermissionManager;
+import com.example.vidinalex.helpme.utils.PhoneLinker;
+import com.example.vidinalex.helpme.utils.RegisterDataFilter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -42,7 +42,7 @@ public class EmailRegistrationActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_email_registration);
 
-        PermissionManager.checkPermissionsAndRequest(this, PermissionManager.DEFAULT_PERMISION_PACK);
+        PermissionManager.checkPermissionsAndRequest(this, PermissionManager.DEFAULT_PERMISSION_PACK);
 
         mAuth = FirebaseAuth.getInstance();
 

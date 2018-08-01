@@ -6,13 +6,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.example.vidinalex.helpme.R;
-import com.example.vidinalex.helpme.fragments.NewsPreviewElementView;
-import com.example.vidinalex.helpme.helpers.GlobalVars;
-import com.example.vidinalex.helpme.helpers.PermissionManager;
 import com.example.vidinalex.helpme.toolbar.LeftSideToolbarInitializator;
+import com.example.vidinalex.helpme.uifragments.NewsPreviewElementView;
+import com.example.vidinalex.helpme.uifragments.NewsRecyclerViewAdapter;
+import com.example.vidinalex.helpme.utils.GlobalVars;
+import com.example.vidinalex.helpme.utils.PermissionManager;
 import com.mikepenz.materialdrawer.Drawer;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,11 +25,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        PermissionManager.checkPermissionsAndRequest(this, PermissionManager.DEFAULT_PERMISION_PACK);
+        PermissionManager.checkPermissionsAndRequest(this, PermissionManager.DEFAULT_PERMISSION_PACK);
 
         GlobalVars.setFileSavingPath(getApplicationContext().getFilesDir().toString() + File.separator);
 
-
+        GlobalVars.setContext(getApplicationContext());
 
         updateNews();
 
@@ -48,25 +50,50 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateNews()
     {
-        if(true)
-        {
-            //TODO грузим новости из кэша
-            RecyclerView feedLayout = findViewById(R.id.list);
+        ArrayList<NewsPreviewElementView> arrayList = new ArrayList<>();
+        arrayList = getListWithCachedNews(arrayList);
+
+        //TODO грузим из облака и кэшируем, а ещё ебёмся с подгрузкой из кэша
+
+        initRecyclerView(arrayList);
+
+    }
+
+    private ArrayList<NewsPreviewElementView> getListWithCachedNews(ArrayList<NewsPreviewElementView> arrayList)
+    {
+        NewsPreviewElementView newsPreviewElementView;
 
 
-            NewsPreviewElementView newsPreviewElementView = new NewsPreviewElementView(feedLayout.getContext());
+        //TODO настроить подгрузку новостей из кэша(общий файл с записями о новостях - сборка новости по кускам)
+        ArrayList<String> as = new ArrayList<>();
+        as.add("clip-art-12.png");
 
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-            feedLayout.setLayoutManager(linearLayoutManager);
+        for (int i = 0; i < 40; i++) {
 
-            //TODO https://developer.android.com/guide/topics/ui/layout/recyclerview это ресайкл вью, если не выйдет юзать его, юзаем линеар, но это уёбищно
+            as = new ArrayList<>();
+            as.add("clip-art-12.png");
 
-
-
-
-
-
+            newsPreviewElementView = new NewsPreviewElementView
+                    (as, String.valueOf(i), "Head",
+                            "body", NewsPreviewElementView.POST_LOAD_FROM_CLOUD);
+            arrayList.add(newsPreviewElementView);
         }
+        return arrayList;
+    }
+
+
+
+    private void initRecyclerView(ArrayList<NewsPreviewElementView> arrayList)
+    {
+        RecyclerView feedLayout = findViewById(R.id.list);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        layoutManager.scrollToPosition(0);
+
+        feedLayout.setLayoutManager(layoutManager);
+
+        feedLayout.setAdapter(new NewsRecyclerViewAdapter(arrayList));
     }
 
 

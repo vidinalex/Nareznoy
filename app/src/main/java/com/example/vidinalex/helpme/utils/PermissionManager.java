@@ -1,10 +1,12 @@
-package com.example.vidinalex.helpme.helpers;
+package com.example.vidinalex.helpme.utils;
 
+import android.Manifest;
 import android.content.pm.PackageManager;
 import android.support.v7.app.AppCompatActivity;
 
 public class PermissionManager {
-    public static final String[] DEFAULT_PERMISION_PACK = new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE,
+    public static final String[] DEFAULT_PERMISSION_PACK = new String[]{
+            android.Manifest.permission.READ_EXTERNAL_STORAGE,
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
             android.Manifest.permission.INTERNET,
             android.Manifest.permission.ACCESS_NETWORK_STATE};
@@ -40,5 +42,15 @@ public class PermissionManager {
         }
 
 
+    }
+
+
+    public static boolean checkReadAndWritePermission()
+    {
+        if(GlobalVars.getContext().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
+                GlobalVars.getContext().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+            return true;
+        else
+            return false;
     }
 }

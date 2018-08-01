@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.vidinalex.helpme.R;
-import com.example.vidinalex.helpme.helpers.PermissionManager;
+import com.example.vidinalex.helpme.utils.PermissionManager;
 import com.example.vidinalex.helpme.toolbar.LeftSideToolbarInitializator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthProvider;
@@ -28,7 +28,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        PermissionManager.checkPermissionsAndRequest(this, PermissionManager.DEFAULT_PERMISION_PACK);
+        PermissionManager.checkPermissionsAndRequest(this, PermissionManager.DEFAULT_PERMISSION_PACK);
 
         mAuth = FirebaseAuth.getInstance();
 

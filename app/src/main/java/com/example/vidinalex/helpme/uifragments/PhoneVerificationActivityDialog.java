@@ -1,4 +1,4 @@
-package com.example.vidinalex.helpme.fragments;
+package com.example.vidinalex.helpme.uifragments;
 
 import android.content.Intent;
 import android.os.Bundle;
