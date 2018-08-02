@@ -1,6 +1,5 @@
 package com.example.vidinalex.helpme.uifragments;
 
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +15,9 @@ import com.example.vidinalex.helpme.R;
 import com.example.vidinalex.helpme.utils.GlobalVars;
 import com.example.vidinalex.helpme.utils.PermissionManager;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -27,6 +28,8 @@ import java.util.List;
 public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerViewAdapter.ListItemViewHolder> {
 
     private List<NewsPreviewElementView> list;
+    private FirebaseStorage storage;
+    private StorageReference storageRef;
 
     public NewsRecyclerViewAdapter(List<NewsPreviewElementView> list)
     {
@@ -46,21 +49,19 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
 
         ArrayList<String> arrayList = newsPreviewElementView.imagesArrayList;
 
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReferenceFromUrl("gs://nareznoy-ea2b7.appspot.com/clip-art-12.png");
-        final File local = new File(GlobalVars.getFileSavingPath() +
-                File.pathSeparator +"newsImages"+ File.separator + storageRef);
+        String fileName = arrayList.get(0);
+
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference().child("newsImages").child(fileName);
+        String path = GlobalVars.getFileSavingPath() + /*"news"
+                + File.separator + "images" +*/ File.separator + fileName;
 
 
         if(newsPreviewElementView.loadFrom == NewsPreviewElementView.POST_LOAD_FROM_CLOUD)
         {
             if(PermissionManager.checkReadAndWritePermission()) {
-                storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        //TODO грузнуть файл и пихнуть в имэджВью
-                    }
-                });
+                saveFile(path);
+                holder.imageView.setImageURI(Uri.fromFile(new File(path)));
             }
             else
             {
@@ -73,8 +74,8 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
         }
         else
         {
-            holder.imageView.setImageBitmap(BitmapFactory.decodeFile(local.getPath()));
-            Log.d("Image", "Read from cache");
+            holder.imageView.setImageURI(Uri.fromFile(new File(path)));
+            Log.d("Image:Read from cache", path);
         }
 
     }
@@ -111,6 +112,21 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
             body = item.findViewById(R.id.body);
 
         }
+    }
+
+
+    private void saveFile(String path)
+    {
+        final File file = new File(path);
+        storageRef.getFile(file).addOnCompleteListener(new OnCompleteListener<FileDownloadTask.TaskSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task) {
+                if(task.isSuccessful())
+                    Log.d("File saved", file.getAbsolutePath());
+                else
+                    Log.d("File Failed","");
+            }
+        });
     }
 
 }

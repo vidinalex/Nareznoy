@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<String> as = new ArrayList<>();
         as.add("clip-art-12.png");
 
-        for (int i = 0; i < 40; i++) {
+        for (int i = 0; i < 4000; i++) {
 
             as = new ArrayList<>();
             as.add("clip-art-12.png");
