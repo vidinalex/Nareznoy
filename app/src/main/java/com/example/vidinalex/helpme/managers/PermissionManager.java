@@ -1,8 +1,10 @@
-package com.example.vidinalex.helpme.utils;
+package com.example.vidinalex.helpme.managers;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.support.v7.app.AppCompatActivity;
+
+import com.example.vidinalex.helpme.utils.GlobalVars;
 
 public class PermissionManager {
     public static final String[] DEFAULT_PERMISSION_PACK = new String[]{

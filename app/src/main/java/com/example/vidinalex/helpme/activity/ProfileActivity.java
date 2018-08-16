@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.example.vidinalex.helpme.utils.GlobalVars;
 import com.example.vidinalex.helpme.utils.InternetChecker;
 import com.example.vidinalex.helpme.toolbar.LeftSideToolbarInitializator;
-import com.example.vidinalex.helpme.utils.PermissionManager;
+import com.example.vidinalex.helpme.managers.PermissionManager;
 import com.example.vidinalex.helpme.utils.QrCodeGenerator;
 import com.example.vidinalex.helpme.R;
 import com.google.firebase.auth.FirebaseAuth;

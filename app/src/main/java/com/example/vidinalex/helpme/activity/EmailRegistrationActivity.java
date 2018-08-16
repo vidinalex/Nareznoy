@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.vidinalex.helpme.R;
-import com.example.vidinalex.helpme.utils.PermissionManager;
+import com.example.vidinalex.helpme.managers.PermissionManager;
 import com.example.vidinalex.helpme.utils.PhoneLinker;
 import com.example.vidinalex.helpme.utils.RegisterDataFilter;
 import com.google.android.gms.tasks.OnCompleteListener;

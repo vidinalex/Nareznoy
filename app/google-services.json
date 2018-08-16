@@ -8,6 +8,50 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:639433172496:android:c0e0e425832d74a9",
+        "android_client_info": {
+          "package_name": "com.example.crutcher.qrcodescannernareznoy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "639433172496-c0g31ufvg2ku722qcllu5kich2va2uet.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.crutcher.qrcodescannernareznoy",
+            "certificate_hash": "65cc8f975c2d9419de85da3d050e84ea4af34cab"
+          }
+        },
+        {
+          "client_id": "639433172496-1sfppvsj3hor3cmpoc3bk2do523gpkfa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbHFDbGrjUkaDQ73TvGQtyIPw5hMDX_Qk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "639433172496-1sfppvsj3hor3cmpoc3bk2do523gpkfa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:639433172496:android:0db7bfb413024be1",
         "android_client_info": {
           "package_name": "com.example.vidinalex.helpme"
@@ -20,6 +64,14 @@
           "android_info": {
             "package_name": "com.example.vidinalex.helpme",
             "certificate_hash": "0215aba4612e1d6b8a36376bc46e8afe9e9e2557"
+          }
+        },
+        {
+          "client_id": "639433172496-jse5a7bdnbjh14ao3dlr6ij5uu5m5lk1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.vidinalex.helpme",
+            "certificate_hash": "65cc8f975c2d9419de85da3d050e84ea4af34cab"
           }
         },
         {

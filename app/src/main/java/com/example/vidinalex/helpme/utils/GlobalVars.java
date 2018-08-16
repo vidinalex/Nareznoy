@@ -2,6 +2,8 @@ package com.example.vidinalex.helpme.utils;
 
 import android.content.Context;
 
+import java.io.File;
+
 public class GlobalVars {
 
     private static String fileSavingPath = "";
@@ -21,5 +23,10 @@ public class GlobalVars {
 
     public static Context getContext() {
         return context;
+    }
+
+    public static File getNewsListFile()
+    {
+        return new File(GlobalVars.getFileSavingPath() + File.separator + "newsList.txt");
     }
 }

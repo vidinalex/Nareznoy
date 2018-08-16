@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.vidinalex.helpme.R;
-import com.example.vidinalex.helpme.utils.PermissionManager;
+import com.example.vidinalex.helpme.managers.PermissionManager;
 import com.example.vidinalex.helpme.toolbar.LeftSideToolbarInitializator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthProvider;

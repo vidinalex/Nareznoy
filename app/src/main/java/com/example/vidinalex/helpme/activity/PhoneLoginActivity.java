@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.vidinalex.helpme.utils.PermissionManager;
+import com.example.vidinalex.helpme.managers.PermissionManager;
 import com.example.vidinalex.helpme.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

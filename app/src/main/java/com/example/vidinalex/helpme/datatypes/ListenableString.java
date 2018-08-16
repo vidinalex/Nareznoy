@@ -1,4 +1,4 @@
-package com.example.vidinalex.helpme.utils;
+package com.example.vidinalex.helpme.datatypes;
 
 public class ListenableString {
 
@@ -10,7 +10,7 @@ public class ListenableString {
     private String s;
     private MyDataChangeListener listener;
 
-    ListenableString(String s)
+    public ListenableString(String s)
     {
         this.listener = null;
         this.s = s;
